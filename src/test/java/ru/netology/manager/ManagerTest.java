@@ -3,41 +3,33 @@ package ru.netology.manager;
 import org.junit.jupiter.api.Assertions;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import ru.netology.domain.Movie;
+import ru.netology.repository.MovieRepository;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
-class ManagerTest {
-    Manager manager = new Manager();
-
-    Movie one = new Movie("matrix1", "Матрица 1", "fantastic", "none", false);
-    Movie two = new Movie("matrix2", "Матрица 2: Перезагрузка", "fantastic", "none", false);
-    Movie three = new Movie("matrix3", "Матрица 3: Воскрешение", "fantastic", "none", false);
-    Movie four = new Movie("matrix4", "Матрица 4: Воскрешение", "fantastic", "none", true);
-    Movie five = new Movie("bloodshot", "Бладшот", "action", "none", false);
-    Movie six = new Movie("forward", "Вперёд", "cartoon", "none", false);
-    Movie seven = new Movie("hotel-belgrade", "Отель Белград", "comedy", "none", false);
-    Movie eight = new Movie("gentlemen", "Джентльмены", "action", "none", false);
-    Movie nine = new Movie("invisible-man", "Человек-невидимка", "scary", "none", false);
-    Movie ten = new Movie("trolls-world-tour", "Тролли.Мировой тур", "cartoon", "none", true);
-    Movie eleven = new Movie("number-one", "Номер Один", "comedy", "none", true);
-    Movie twelve = new Movie("astral", "Астрал", "scary", "none", false);
+class MovieManagerTest {
+    MovieRepository repo = Mockito.mock(MovieRepository.class);
+    MovieManager manager = new MovieManager(repo);
+    Movie one = new Movie(1, "Матрица 1", "fantastic", "none", false);
+    Movie two = new Movie(2, "Матрица 2: Перезагрузка", "fantastic", "none", false);
+    Movie three = new Movie(3, "Матрица 3: Воскрешение", "fantastic", "none", false);
+    Movie four = new Movie(4, "Матрица 4: Воскрешение", "fantastic", "none", true);
+    Movie five = new Movie(5, "Бладшот", "action", "none", false);
+    Movie six = new Movie(6, "Вперёд", "cartoon", "none", false);
+    Movie seven = new Movie(7, "Отель Белград", "comedy", "none", false);
+    Movie eight = new Movie(8, "Джентльмены", "action", "none", false);
+    Movie nine = new Movie(9, "Человек-невидимка", "scary", "none", false);
+    Movie ten = new Movie(10, "Тролли.Мировой тур", "cartoon", "none", true);
+    Movie eleven = new Movie(11, "Номер Один", "comedy", "none", true);
+    Movie twelve = new Movie(12, "Астрал", "scary", "none", false);
 
 
     @Test
     public void shouldAddNewMovieAndFindAll() {
-        manager.save(one);
-        manager.save(two);
-        manager.save(three);
-        manager.save(four);
-        manager.save(five);
-        manager.save(six);
-        manager.save(seven);
-        manager.save(eight);
-        manager.save(nine);
-        manager.save(ten);
-        manager.save(eleven);
-        manager.save(twelve);
+        Movie[] movies = {one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve};
+        doReturn(movies).when(repo).findAll();
 
 
         Movie[] expected = {one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve};
@@ -47,18 +39,9 @@ class ManagerTest {
 
     @Test
     public void shouldFindLast() {
-        manager.save(one);
-        manager.save(two);
-        manager.save(three);
-        manager.save(four);
-        manager.save(five);
-        manager.save(six);
-        manager.save(seven);
-        manager.save(eight);
-        manager.save(nine);
-        manager.save(ten);
-        manager.save(eleven);
-        manager.save(twelve);
+        Movie[] movies = {one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve};
+        doReturn(movies).when(repo).findAll();
+
 
         Movie[] expected = {twelve, eleven, ten, nine, eight, seven, six, five, four, three};
         Movie[] actual = manager.findLast();
@@ -68,11 +51,9 @@ class ManagerTest {
 
     @Test
     public void shouldFindLastLessLimit() {
+        Movie[] movies = {nine, ten, eleven, twelve};
+        doReturn(movies).when(repo).findAll();
 
-        manager.save(nine);
-        manager.save(ten);
-        manager.save(eleven);
-        manager.save(twelve);
 
         Movie[] expected = {twelve, eleven, ten, nine};
         Movie[] actual = manager.findLast();
@@ -82,38 +63,24 @@ class ManagerTest {
 
     @Test
     public void shouldFindLastFive() {
-        Manager manager = new Manager();
-        manager.save(one);
-        manager.save(two);
-        manager.save(three);
-        manager.save(four);
-        manager.save(five);
-        manager.save(six);
-        manager.save(seven);
-        manager.save(eight);
-        manager.save(nine);
-        manager.save(ten);
-        manager.save(eleven);
-        manager.save(twelve);
+        Movie[] movies = {one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve};
+        doReturn(movies).when(repo).findAll();
+
 
         Movie[] expected = {twelve, eleven, ten, nine, eight};
         Movie[] actual = manager.findLast(5);
         Assertions.assertArrayEquals(expected, actual);
 
     }
+
     @Test
-    public void shouldFindLastFiveIfFour() {
-        Manager manager = new Manager();
+    public void ShouldFindLastIfFour() {
+        Movie[] movies = {one, two, three, four};
+        doReturn(movies).when(repo).findAll();
 
-        manager.save(nine);
-        manager.save(ten);
-        manager.save(eleven);
-        manager.save(twelve);
-
-        Movie[] expected = {twelve, eleven, ten, nine};
+        Movie[] expected = {four, three, two, one};
         Movie[] actual = manager.findLast(5);
         Assertions.assertArrayEquals(expected, actual);
-
     }
 
 
