@@ -76,7 +76,8 @@ class MovieManagerTest {
 
     @Test
     public void ShouldFindLastIfFour() {
-        MovieManager manager = new MovieManager(repo, 5);
+        MovieManager manager = new MovieManager(repo,5);
+
         Movie[] movies = {one, two, three, four};
         doReturn(movies).when(repo).findAll();
 

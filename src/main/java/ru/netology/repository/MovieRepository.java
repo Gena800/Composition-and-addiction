@@ -20,7 +20,6 @@ public class MovieRepository {
         movies = tmp;                               //переписать из времянки
     }
 
-//movie.getId() == id
     public Movie[] findById(int id) {
         Movie[] tmp = new Movie[1];
         int copyToIndex = 0;
