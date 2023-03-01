@@ -63,23 +63,25 @@ class MovieManagerTest {
 
     @Test
     public void shouldFindLastFive() {
+        MovieManager manager = new MovieManager(repo, 5);
         Movie[] movies = {one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve};
         doReturn(movies).when(repo).findAll();
 
 
         Movie[] expected = {twelve, eleven, ten, nine, eight};
-        Movie[] actual = manager.findLast(5);
+        Movie[] actual = manager.findLast();
         Assertions.assertArrayEquals(expected, actual);
 
     }
 
     @Test
     public void ShouldFindLastIfFour() {
+        MovieManager manager = new MovieManager(repo, 5);
         Movie[] movies = {one, two, three, four};
         doReturn(movies).when(repo).findAll();
 
         Movie[] expected = {four, three, two, one};
-        Movie[] actual = manager.findLast(5);
+        Movie[] actual = manager.findLast();
         Assertions.assertArrayEquals(expected, actual);
     }
 

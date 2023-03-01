@@ -10,6 +10,11 @@ public class MovieManager {
         this.repo = repo;
     }
 
+    public MovieManager(MovieRepository repo, int limitMovies) {
+        this.repo = repo;
+        this.limitMovies = limitMovies;
+    }
+
 
     private int limitMovies = 10;
 
@@ -25,22 +30,6 @@ public class MovieManager {
 
 
     public Movie[] findLast() {
-        Movie[] all = repo.findAll();
-        Movie[] reversed = new Movie[all.length];
-        int resultLenght;
-        if (reversed.length < limitMovies) {
-            resultLenght = reversed.length;
-        } else {
-            resultLenght = limitMovies;
-        }
-        Movie[] tmp = new Movie[resultLenght];
-        for (int i = 0; i < tmp.length; i++) {
-            tmp[i] = all[all.length - 1 - i];
-        }
-        return tmp;
-    }
-
-    public Movie[] findLast(int limitMovies) {
         Movie[] all = repo.findAll();
         Movie[] reversed = new Movie[all.length];
         int resultLenght;
