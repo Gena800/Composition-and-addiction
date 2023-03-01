@@ -82,7 +82,7 @@ class ManagerTest {
 
     @Test
     public void shouldFindLastFive() {
-        Manager manager = new Manager();
+        Manager manager = new Manager(5);
         manager.save(one);
         manager.save(two);
         manager.save(three);
@@ -97,13 +97,13 @@ class ManagerTest {
         manager.save(twelve);
 
         Movie[] expected = {twelve, eleven, ten, nine, eight};
-        Movie[] actual = manager.findLast(5);
+        Movie[] actual = manager.findLast();
         Assertions.assertArrayEquals(expected, actual);
 
     }
     @Test
     public void shouldFindLastFiveIfFour() {
-        Manager manager = new Manager();
+        Manager manager = new Manager(5);
 
         manager.save(nine);
         manager.save(ten);
@@ -111,7 +111,7 @@ class ManagerTest {
         manager.save(twelve);
 
         Movie[] expected = {twelve, eleven, ten, nine};
-        Movie[] actual = manager.findLast(5);
+        Movie[] actual = manager.findLast();
         Assertions.assertArrayEquals(expected, actual);
 
     }
