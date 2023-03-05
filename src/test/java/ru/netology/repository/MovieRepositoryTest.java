@@ -44,6 +44,17 @@ class MovieRepositoryTest {
     @Test
     public void shouldAddNewMovieAndFindAll() {
 
+
+
+
+        Movie[] expected = {one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve};
+        Movie[] actual = repo.findAll();
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldRemoveByIdMovieAndFindAll() {
+
         repo.removeById(12);
 
 
